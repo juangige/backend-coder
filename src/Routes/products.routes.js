@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import productManager from '../Manager/productManager.js';
+import { Server } from "socket.io";
 
 const router = Router();
 
@@ -41,6 +42,11 @@ router.post("/", async (req, res) => {
 
     await productManager.addProduct(product);
     res.status(201).json({ message: "Producto Creado!" });
+
+    const products = productManager.getProducts();
+
+    io.emit("productsList", products);
+
 });
 // Ruta para actualizar un producto
 router.put("/:productId", async (req, res) => {

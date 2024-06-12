@@ -1,0 +1,28 @@
+<div>
+    <h1>Carga de Productos</h1>
+    <form id="productForm">
+        <label for="title">Nombre de Producto</label>
+        <input type="text" name="title" id="title">
+        <label for="description">Descripción</label>
+        <input type="text" name="description" id="description">
+        <label for="price">Precio</label>
+        <input type="number" name="price" id="price">
+        <label for="thumbnail">Imagen</label>
+        <input type="text" name="thumbnail" id="thumbnail">
+        <label for="code">Codigo</label>
+        <input type="text" name="code" id="code">
+        <label for="stock">Stock</label>
+        <input type="number" name="stock" id="stock">
+        <label for="category">Categoría</label>
+        <input type="text" name="category" id="category">
+    </form>
+    <button id="saveProduct">Guardar</button>
+</div>
+
+<div>
+    <h1>Productos</h1>
+    <ul id="productsList"></ul>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="../../public/js/realtimeproducts.js"></script>
