@@ -1,40 +1,47 @@
 import { Router } from "express";
-import cartManager from "../Manager/cartManager.js";
+import { cartModel } from "../models/cart.model.js"
 
 const router = Router();
 
 // Ruta para crear un nuevo carrito
 router.post("/", async (req, res) => {
-    const newCart = await cartManager.addCart();
-    if (!newCart) {
-        return res.status(500).json({ message: "Error al crear el carrito" });
-    }
+    const newCart = await cartModel.create({ products: [] });
     res.status(201).json({ message: "Carrito creado", cart: newCart });
 });
 
-// Ruta para obtener productos de un carrito específico
-router.get("/:cartId", (req, res) => {
-    const { cartId } = req.params;
-    const cart = cartManager.getCartById(Number(cartId));
-
-    if (!cart) {
-        return res.status(404).json({ message: "No se encontró el carrito" });
+// Ruta para obtener los carritos
+router.get("/", async (req, res) => {
+    try {
+        const carts = await cartModel.find();
+        res.json(carts);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
+})
 
-    res.json(cart.products);
-});
+// Ruta para obtener productos de un carrito específico
+router.get("/:cartId", async (req, res) => {
+    try {
+        const { cartId } = req.params;
+        const cart = await cartModel.findById(cartId);
+        res.json(cart.products);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+})
 
 // Ruta para agregar un producto a un carrito específico
 router.post("/:cartId/product/:productId", async (req, res) => {
-    const { cartId, productId } = req.params;
-    const updatedCart = await cartManager.addProductToCart(Number(cartId), Number(productId));
-
-    if (!updatedCart) {
-        return res.status(404).json({ message: "No se encontró el carrito o hubo un error al agregar el producto" });
+    try {
+        const { cartId, productId } = req.params;
+        const cart = await cartModel.findById(cartId);
+        cart.products.push({ product: productId, quantity: 1 });
+        await cart.save();
+        res.json(cart.products); 
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-
-    res.json({ message: "Producto añadido al carrito", cart: updatedCart });
-});
+})
 
 export default router;
 

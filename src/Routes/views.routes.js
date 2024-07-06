@@ -2,29 +2,18 @@ import { Router } from 'express';
 import fs from 'fs';
 import __dirname from '../dirname.js';
 import path from 'path';
+import { productModel } from '../models/products.model.js';
 
 const router = Router();
 
-const loadProducts = () => {
+router.get("/", async (req, res) => {
     try {
-        const data = fs.readFileSync(path.join(__dirname, 'db', 'productos.json'), 'utf-8');
-        return JSON.parse(data);
+        const data = await productModel.find();
+        console.log(data);
+        res.render("index", {data});
     } catch (error) {
-        console.error('Error al leer el archivo de productos:', error);
-        return [];
+        res.status(500).json({ message: error.message });
     }
-};
-
-let products = loadProducts();
-
-router.get("/", (req, res) => {
-    
-    const data = {
-        title: "Bienvenidos",
-        name: "Juan Gigena"
-    }
-
-    res.render("index", data);
 })
 
 router.get("/realtimeproducts", (req, res) => {
