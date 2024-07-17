@@ -1,7 +1,5 @@
 import { Router } from 'express';
-import fs from 'fs';
 import __dirname from '../dirname.js';
-import path from 'path';
 import { productModel } from '../models/products.model.js';
 
 const router = Router();
@@ -23,6 +21,20 @@ router.get("/realtimeproducts", (req, res) => {
     }
 
     res.render("realTimeProducts", {products});
+})
+
+router.get("/products", async (req, res) => {
+    const data = {
+        title: "Products"
+    }
+    const {page, limit} = req.query;
+
+    try{
+        const products = await productModel.paginate({}, {page, limit});
+        res.render("products", {products});
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 })
 
 export default router

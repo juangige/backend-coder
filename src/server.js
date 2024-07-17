@@ -2,14 +2,17 @@ import express from "express";
 import __dirname from "./dirname.js";
 import productsRoutes from "./Routes/products.routes.js";
 import cartsRoutes from "./Routes/carts.routes.js";
-import Handlebars  from "express-handlebars";
+import handlebars  from "express-handlebars";
+import Handlebars from "handlebars";
 import viewsRoutes from "./Routes/views.routes.js";
 import mongoose from "mongoose";
+import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 
  
 const app = express();
 const PORT = 5000;
 
+// Conexión a la base de datos
 mongoose.connect('mongodb://localhost:27017/dbproductos')
 .then(() => console.log("Conectado a la base de datos"))
 .catch((error) => console.log(error));
@@ -28,9 +31,10 @@ app.use('/public', express.static('public', {
 }));
 
 // Configuracion de Handlebars
-app.engine("hbs", Handlebars.engine({
-    extname: ".hbs",
-    defaultLayout: "main.hbs",
+app.engine("hbs", handlebars.engine({
+    extname: "hbs",
+    defaultLayout: "main",
+    handlebars: allowInsecurePrototypeAccess(Handlebars)
 }))
 
 // Setear el engine en express
@@ -52,4 +56,5 @@ app.use("/api/carts/:cartId/products/:productId", cartsRoutes);
 // Routes Views
 app.use("/", viewsRoutes);
 app.use("/realtimeproducts", viewsRoutes);
+app.use("/products", viewsRoutes);
 

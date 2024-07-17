@@ -43,6 +43,53 @@ router.post("/:cartId/product/:productId", async (req, res) => {
     }
 })
 
+// Ruta para eliminar un producto de un carrito
+router.delete("/:cartId/products/:productId", async (req, res) => {
+    try {
+        const { cartId, productId } = req.params;
+        const cart = await cartModel.findById(cartId);
+        cart.products = cart.products.filter((product) => product.product != productId);
+        await cart.save();
+        res.json(cart.products);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+})
+// Ruta para eliminar un carrito
+router.delete("/:cartId", async (req, res) => {
+    try {
+        const { cartId } = req.params;
+        const cart = await cartModel.findByIdAndDelete(cartId);
+        res.json(cart);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+})
+
+// Ruta para actualizar productos de un carrito
+router.put("/carts/:cartId/products/:productId", async (req, res) => {
+    try{
+        const { cartId, productId } = req.body;
+        const cart = await cartModel.findById(cartId);
+        cart.products = cart.products.filter((product) => product.product != productId);
+        await cart.save();
+        res.json(cart.products);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+})
+// Ruta para actualizar un carrito
+router.put("/:cartId", async (req, res) => {
+    try {
+        const { cartId } = req.params;
+        const { products } = req.body;
+        const updateCart = await cartModel.findByIdAndUpdate(cartId, { products });
+        res.json({ message: "Carrito actualizado", cart: updateCart });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+})
+
 export default router;
 
 

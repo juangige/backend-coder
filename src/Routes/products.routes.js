@@ -5,18 +5,22 @@ const router = Router();
 
 
 
-// Ruta para obtener todos los productos
+// Ruta para obtener todos los productos con filtros
 router.get("/", async (req, res) => {
+    const {page, limit, query} = req.query;
     try{
-        const products = await productModel.find();
-        res.json(products);
+        const products = await productModel.paginate({}, { limit, page });
+        res.json({
+            status: "success",
+            payload: products,
+            ... products,
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+   
+})
     
-});
-    
-
 // Ruta para obtener por ID
 router.get("/:productId", async (req, res, next) => {
     try {
@@ -81,6 +85,8 @@ router.delete("/:productId", async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+
 
 export default router;
 

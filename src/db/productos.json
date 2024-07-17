@@ -42,5 +42,126 @@
 		"thumbnail": "https://placeimg.com/640/480/any",
 		"code": "0004A",
 		"status": true
+	},
+	{
+		"id": 5,
+		"title": "Tarea 5",
+		"description": "Tarea 5",
+		"category": "Tarea",
+		"price": 5000,
+		"stock": 5,
+		"thumbnail": "https://placeimg.com/640/480/any",
+		"code": "0005A",
+		"status": true
+	},
+	{
+		"id": 6,
+		"title": "Tarea 6",
+		"description": "Tarea 6",
+		"category": "Tarea",
+		"price": 6000,
+		"stock": 5,
+		"thumbnail": "https://placeimg.com/640/480/any",
+		"code": "0006A",
+		"status": true
+	},
+	{
+		"id": 7,
+		"title": "Tarea 7",
+		"description": "Tarea 7",
+		"category": "Tarea",
+		"price": 7000,
+		"stock": 5,
+		"thumbnail": "https://placeimg.com/640/480/any",
+		"code": "0007A",
+		"status": true
+	},
+	{
+		"id": 8,
+		"title": "Tarea 8",
+		"description": "Tarea 8",
+		"category": "Tarea",
+		"price": 8000,
+		"stock": 5,
+		"thumbnail": "https://placeimg.com/640/480/any",
+		"code": "0008A",
+		"status": true
+	},
+	{
+		"id": 9,
+		"title": "Tarea 9",
+		"description": "Tarea 9",
+		"category": "Tarea",
+		"price": 9000,
+		"stock": 5,
+		"thumbnail": "https://placeimg.com/640/480/any",
+		"code": "0009A",
+		"status": true
+	},
+	{
+		"id": 10,
+		"title": "Tarea 10",
+		"description": "Tarea 10",
+		"category": "Tarea",
+		"price": 10000,
+		"stock": 5,
+		"thumbnail": "https://placeimg.com/640/480/any",
+		"code": "0010A",
+		"status": true
+	},
+	{
+		"id": 11,
+		"title": "Tarea 11",
+		"description": "Tarea 11",
+		"category": "Tarea",
+		"price": 11000,
+		"stock": 5,
+		"thumbnail": "https://placeimg.com/640/480/any",
+		"code": "0011A",
+		"status": true
+	},
+	{
+		"id": 12,
+		"title": "Tarea 12",
+		"description": "Tarea 12",
+		"category": "Tarea",
+		"price": 12000,
+		"stock": 5,
+		"thumbnail": "https://placeimg.com/640/480/any",
+		"code": "0012A",
+		"status": true
+	},
+	{
+		"id": 13,
+		"title": "Tarea 13",
+		"description": "Tarea 13",
+		"category": "Tarea",
+		"price": 13000,
+		"stock": 5,
+		"thumbnail": "https://placeimg.com/640/480/any",
+		"code": "0013A",
+		"status": true
+	},
+	{
+		"id": 14,
+		"title": "Tarea 14",
+		"description": "Tarea 14",
+		"category": "Tarea",
+		"price": 14000,
+		"stock": 5,
+		"thumbnail": "https://placeimg.com/640/480/any",
+		"code": "0014A",
+		"status": true
+	},
+	{
+		"id": 15,
+		"title": "Tarea 15",
+		"description": "Tarea 15",
+		"category": "Tarea",
+		"price": 15000,
+		"stock": 5,
+		"thumbnail": "https://placeimg.com/640/480/any",
+		"code": "0015A",
+		"status": true
 	}
 ]
