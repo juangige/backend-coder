@@ -19,6 +19,10 @@ Repositorio de un servidor con Express
 - /api/carts
 - /api/carts/:cartId/products/:productId
 
-
+### Auth:
+- /api/auth/login
+- /api/auth/register
+- /api/auth/current
+- /api/auth/logout
 
 Comienza a desarrollar tu servidor.

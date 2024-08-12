@@ -25,7 +25,7 @@ userSchema.pre("save", function (next) {
   next(new Error("Email inválido"));
 });
 
-// Hashea la contraseña del usuario en el registro
+// Hashea la contraseña del usuario en el registro (Se hashea dos veces)
 // userSchema.pre("save", async function (next) {
 //   const newPassword = await createHash(this.password);
 //   this.password = newPassword;
