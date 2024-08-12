@@ -1,4 +1,3 @@
-import { userModel } from "../models/user.model.js";
 import { createToken } from "../utils/jwt.js";
 
 class AuthController {

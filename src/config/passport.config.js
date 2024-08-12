@@ -96,7 +96,7 @@ function initializePassport() {
       let token = null;
     
       if (req && req.cookies) {
-        token = req.cookies.token;
+        token = req.cookies.coderToken;
       }
       console.log("cookieExtractor", token);
     

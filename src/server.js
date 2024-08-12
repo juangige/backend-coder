@@ -23,7 +23,7 @@ mongoose.connect('mongodb://localhost:27017/dbproductos')
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "../public"));
-app.use(cookieParser());
+app.use(cookieParser()); // Cookies
 
 // Passport
 initializePassport();

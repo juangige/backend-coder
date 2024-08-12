@@ -25,10 +25,11 @@ userSchema.pre("save", function (next) {
   next(new Error("Email inválido"));
 });
 
-userSchema.pre("save", async function (next) {
-  const newPassword = await createHash(this.password);
-  this.password = newPassword;
-  next();
-})
+// Hashea la contraseña del usuario en el registro
+// userSchema.pre("save", async function (next) {
+//   const newPassword = await createHash(this.password);
+//   this.password = newPassword;
+//   next();
+// })
 
 export const userModel = model("users", userSchema)
