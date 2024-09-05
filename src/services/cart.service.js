@@ -7,9 +7,9 @@ export const CartService = {
     },
 
     async getById(id) {
-        return await cartModel.findById(id);
-    },
-
+        return await cartModel.findById(id); 
+      },
+    
     async create(cart) {
         return await cartModel.create(cart);
       },
