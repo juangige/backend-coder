@@ -11,7 +11,7 @@ export const userService = {
 
     async getById(id) {
         return await userModel.findById(id);
-    },
+      },
 
     async getByEmail(email) {
         return await userModel.findOne({ email });

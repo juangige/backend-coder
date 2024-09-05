@@ -1,15 +1,16 @@
 import { Router } from "express";
 import authController from "../controllers/auth.controller.js";
-import passport from "passport";
+import { validate } from "../middlewares/validation.middleware.js";
+import { authDto } from "../dto/auth.dto.js";
+import { userDto } from "../dto/user.dto.js";
+import { authenticate } from "../middlewares/authorization.middleware.js";
 
 const router = Router();
 
 router.post(
   "/login",
-  passport.authenticate("login", {
-      session: false,
-      failureRedirect: "/api/auth/login-fail",
-  }),
+  validate(authDto),
+  authenticate("login"),
   authController.login
 );
 router.get("/login-fail", authController.loginFail);
@@ -17,13 +18,9 @@ router.get("/login-fail", authController.loginFail);
 //
 router.post(
   "/register",
-  passport.authenticate("register", {
-    session: false,
-    failureRedirect: "/api/auth/register-fail",
-  }),
-  async (req, res) => {
-    res.json({ message: "Usuario creado" });
-  }
+  validate(userDto),
+  authenticate("register"),
+  authController.register
 );
 router.get("/register-fail", (req, res) => {
   res.json({ message: "Hubo un error en el Registro" });
@@ -32,7 +29,7 @@ router.get("/register-fail", (req, res) => {
 
 router.get(
   "/current",
-  passport.authenticate("jwt", { session: false }),
+  authenticate("jwt", { session: false }),
   authController.current
 );
 

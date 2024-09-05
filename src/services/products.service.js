@@ -19,5 +19,9 @@ export const ProductService = {
 
   async delete(id) {
     return await productModel.findByIdAndDelete(id);
+  },
+
+  async discountStock(id, quantity) {
+    return await productModel.findByIdAndUpdate(id, { $inc: { stock: -quantity } });
   }
 }

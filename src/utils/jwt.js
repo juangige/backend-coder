@@ -1,6 +1,9 @@
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
-export const JWT_SECRET = "p4ssw0rd_s3cr3t_t3st";
+dotenv.config();
+
+export const JWT_SECRET = process.env.JWT_SECRET;
 
 export function createToken(payload){
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "24h" });

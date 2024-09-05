@@ -1,4 +1,5 @@
 import { userService } from "../services/user.service.js"; 
+import { userModel } from "../models/user.model.js";
 
 class UserController {
     async create(req, res) {
@@ -25,13 +26,17 @@ class UserController {
         }
     }
 
-    async getById(req, res) {
-        const { id } = req.params;
-        try{
-            const user = await userService.getById(id);
-            return res.status(200).json(user);
-        } catch(error) {
-            return res.status(500).json({ message: error.message });
+    async findById(userId) {
+        try {
+            console.log("userId recibido:", userId);  // Verifica qué valor tiene userId
+            const user = await userModel.findById(userId);
+            if (!user) {
+                throw new Error(`Usuario con ID ${userId} no encontrado`);
+            }
+            return user;
+        } catch (error) {
+            console.error("Error en findById:", error.message);  // Imprime el error detallado
+            throw new Error("Error al obtener el usuario");
         }
     }
 
@@ -39,6 +44,27 @@ class UserController {
         const { email } = req.params;
         try{
             const user = await userService.getByEmail(email);
+            return res.status(200).json(user);
+        } catch(error) {
+            return res.status(500).json({ message: error.message });
+        }
+    }
+
+    async update(req, res) {
+        const { id } = req.params;
+        const { first_name, last_name, email, password, age } = req.body;
+        try{
+            const user = await userService.update(id, { first_name, last_name, email, password, age });
+            return res.status(200).json(user);
+        } catch(error) {
+            return res.status(500).json({ message: error.message });
+        }
+    }
+
+    async deleteById(req, res) {
+        const { id } = req.params;
+        try{
+            const user = await userService.deleteById(id);
             return res.status(200).json(user);
         } catch(error) {
             return res.status(500).json({ message: error.message });
