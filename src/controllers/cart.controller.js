@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { cartModel } from "../models/cart.model.js";
 import { productModel } from "../models/products.model.js";
 
+
 export class CartsController {
     async getAll(req, res) {
         try {
@@ -62,7 +63,7 @@ export class CartsController {
         try {
             const { cartId, productId } = req.params;
 
-            const productInCart = cart.products.find((product) => product.product == productId);
+            const productInCart = cartId.products.find((product) => product.product == productId);
             if (!productInCart) {
                 return res.status(400).json({ message: "El producto no se encuentra en el carrito" });
             } else {
@@ -80,7 +81,7 @@ export class CartsController {
         const { productId, quantity } = req.body;
   
         const productExists = await productModel.findById(productId);
-  
+        
         if (!productExists) {
           return res.status(404).json({
             error: "Producto no encontrado",
@@ -126,18 +127,6 @@ export class CartsController {
           details: error.message,
         });
       }
-    }
-    
-    
-
-    async update(req, res) {
-        try {
-            const { cartId } = req.params;
-            const updateCart = await CartService.update(cartId, req.body);
-            res.json(updateCart);
-        } catch (error) {
-            res.status(500).json({ message: error.message });
-        }
     }
 
     async purchase(req, res) {
@@ -216,7 +205,6 @@ export class CartsController {
     }
     
     
-
 }
 
 export const cartController = new CartsController();

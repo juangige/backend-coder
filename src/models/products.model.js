@@ -3,14 +3,18 @@ import mongoosePaginate from 'mongoose-paginate-v2';
 
 const productCollection = 'products';
 
-const productSchema = Schema({
-    title: String,
-    description: String,
-    price: Number,
-    thumbnail: String,
-    code: String,
-    stock: Number
-});
+const productSchema = new Schema(
+    {
+      name: { type: String, require: true },
+      description: { type: String, require: true },
+      price: { type: Number, require: true },
+      image: { type: String, require: true },
+      stock: { type: Number, require: true },
+    },
+    {
+      timestamps: true,
+    }
+  );
 
 productSchema.plugin(mongoosePaginate);
 

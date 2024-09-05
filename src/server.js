@@ -51,12 +51,9 @@ app.engine("hbs", handlebars.engine({
 app.set("view engine", "hbs");
 app.set("views", `${__dirname}/views`);
 
-
- app.listen(config.PORT, () => {
-     console.log(`Server running on port http://localhost:${config.PORT}`);
-  });
-
-
 // Routes
 app.use("/api", routes);
 
+app.listen(config.PORT, () => {
+    console.log(`Server running on port http://localhost:${config.PORT}`);
+ });

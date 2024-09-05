@@ -1,20 +1,24 @@
 import { userService } from "../services/user.service.js"; 
 import { userModel } from "../models/user.model.js";
+import { mailService } from "../services/mail.service.js";
 
 class UserController {
     async create(req, res) {
         const { first_name, last_name, email, password, age } = req.body;
 
-        if(!first_name || !last_name || !email || !password || !age) {
+        if (!first_name || !last_name || !email || !password || !age) {
             return res.status(400).json({ message: "Todos los campos son obligatorios" });
         }
 
-        try{
+        try {
             const user = await userService.create({ first_name, last_name, email, password, age });
             return res.status(201).json(user);
-        } catch(error) {
+        } catch (error) {
+            console.error("Error en create:", error);
+
             return res.status(500).json({ message: error.message });
         }
+        
     }
 
     async getAll(req, res) {

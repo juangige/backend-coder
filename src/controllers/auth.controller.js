@@ -1,5 +1,5 @@
 import { createToken } from "../utils/jwt.js";
-
+import { mailService } from "../services/mail.service.js";
 class AuthController {
     async login(req, res) {
         try{
@@ -21,16 +21,23 @@ class AuthController {
             res.status(401).json({ message: "Login fallido" });
         }
         
-
     }
 
-    async register (req, res) {
-        try{
+    async register(req, res) {
+        try {
+            const user = req.user;
+            await mailService.sendMail(
+                user.email,
+                "New user registered",
+                `<h1>New user registered</h1><p>Name: ${user.first_name}</p><p>Email: ${user.email}</p>`
+            );
+
             res.status(201).json({
-                message: "Registro exitoso",
-                user: req.user
-            })
+                message: "Registro exitoso. Correo enviado.",
+                user
+            });
         } catch (error) {
+            console.error("Error en el registro o envío de correo:", error);
             res.status(401).json({ message: "Registro fallido" });
         }
     }
