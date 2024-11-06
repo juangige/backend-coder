@@ -5,10 +5,9 @@ import  cartsRoutes  from "./carts.routes.js";
 import  viewsRoutes  from "./views.routes.js";
 import  userRoutes  from "./user.routes.js";
 import { authenticate, authorizations } from "../middlewares/authorization.middleware.js";
-import { productDto } from "../dto/product.dto.js";
 import { validate } from "../middlewares/validation.middleware.js";
-import { userDto } from "../dto/user.dto.js";
 import { cartDto } from "../dto/cart.dto.js";
+import userMocks from "./mocks.routes.js";
 
 
 const router = Router();
@@ -21,5 +20,10 @@ router.use("/products",
     authenticate("jwt"),
     authorizations(["admin"]),
      productsRoutes);
+
+// Mocks
+
+router.use("/mocks", userMocks)
+
 
 export default router

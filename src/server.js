@@ -7,13 +7,19 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import { initializePassport } from "./config/passport.config.js";
 import { MongoDBProvider } from "./providers/mongodb.provider.js";
-import { config } from "./config/config.js";
 import routes from "./Routes/index.routes.js";
 import cors from "cors";
+import args from "./utils/args.utils.js"
+import winston from "./middlewares/winstonLogger.midleware.js";
 
  
 const app = express();
 const whiteList = [ 'http://localhost:5000', 'http://localhost:5173' ]
+console.log(args);
+
+// Argumentos
+const port = args.p
+const mode = args.mode
 
 // MongoDB Provider
 MongoDBProvider.getInstance();
@@ -26,6 +32,8 @@ app.use(cors({
     origin: whiteList,
     methods: ["GET", "POST", "PUT", "DELETE"],
 }));
+app.use(winston)
+
 
 // Passport
 initializePassport();
@@ -54,6 +62,6 @@ app.set("views", `${__dirname}/views`);
 // Routes
 app.use("/api", routes);
 
-app.listen(config.PORT, () => {
-    console.log(`Server running on port http://localhost:${config.PORT}`);
+app.listen(port, () => {
+    console.log(`Server running on port http://localhost:${port} on `+mode);
  });

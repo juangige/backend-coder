@@ -1,4 +1,8 @@
 import { ProductService } from "../services/products.service.js";
+import errors from '../utils/errors/errors.js'
+import errorCustom from '../utils/errors/errorCustom.js'
+import winstonLogger from "../utils/winston.util.js";
+
 
 export class ProductsController {
   async getAll(req, res) {
@@ -19,19 +23,21 @@ export class ProductsController {
     try {
       const { productId } = req.params;
       const product = await ProductService.getById(productId);
-      res.json(product);
+      if(!product){
+        errorCustom.newError(errors.error)
+      } else {
+        return res.status(200).json({message: "Producto Encontrado: ", product})
+      }
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
   }
 
-  async create(req, res) {
+  async create(req, res, next) {
     try {
       const { title, description, price, thumbnail, code, stock } = req.body;
       if (!title || !description || !price || !thumbnail || !code || !stock) {
-        return res
-          .status(400)
-          .json({ message: "Todos los campos son requeridos" });
+        errorCustom.newError(errors.error)
       }
 
       const product = await ProductService.create({
@@ -43,7 +49,12 @@ export class ProductsController {
         stock,
         status: true,
       });
-      res.status(201).json({ message: "Producto Creado!" });
+
+      if(!product) {
+        errorCustom.newError(errors.error)
+      } else {
+        res.status(201).json({ message: "Producto Creado!", product });
+      }
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -61,7 +72,13 @@ export class ProductsController {
         code,
         stock,
       });
-      res.json(updateProduct);
+
+      if(!updateProduct) {
+        errorCustom.newError(errors.error)
+      } else {
+        return res.status(200).json({ message:"Producto Modificado", updateProduct});
+      }
+
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -71,7 +88,11 @@ export class ProductsController {
     try {
       const { productId } = req.params;
       const product = await ProductService.deleteById(productId);
-      res.json(product);
+      if(!product) {
+        errorCustom.newError(errors.notFound)
+      }else {
+        return res.status(200).json({ message: "Producto Borrado", product})
+      }
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
