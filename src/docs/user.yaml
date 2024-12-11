@@ -1,0 +1,116 @@
+paths:
+  /users:
+    get:
+      tags:
+        - Usuarios
+      summary: Obtener todos los usuarios
+      operationId: getAllUsers
+      responses:
+        200:
+          description: Lista de usuarios
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        500:
+          description: Error del servidor
+    post:
+      tags:
+        - Usuarios
+      summary: Crear un usuario
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        201:
+          description: Usuario creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Datos de entrada inválidos
+        500:
+          description: Error del servidor
+
+  /users/{id}:
+    get:
+      tags:
+        - Usuarios
+      summary: Obtener un usuario por ID
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID del usuario
+      responses:
+        200:
+          description: Usuario obtenido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        404:
+          description: Usuario no encontrado
+        500:
+          description: Error del servidor
+    put:
+      tags:
+        - Usuarios
+      summary: Actualizar un usuario
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID del usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        200:
+          description: Usuario actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Datos de entrada inválidos
+        404:
+          description: Usuario no encontrado
+        500:
+          description: Error del servidor
+    delete:
+      tags:
+        - Usuarios
+      summary: Eliminar un usuario por ID
+      operationId: deleteUserById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID del usuario
+      responses:
+        200:
+          description: Usuario eliminado
+        404:
+          description: Usuario no encontrado
+        500:
+          description: Error del servidor
+

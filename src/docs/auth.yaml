@@ -1,0 +1,192 @@
+openapi: 3.0.0
+info:
+  title: Auth API
+  description: API para manejo de autenticación y autorización de usuarios.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000/api/auth
+    description: Servidor local
+
+paths:
+  /login:
+    post:
+      tags:
+        - Autenticación
+      summary: Iniciar sesión
+      description: Autentica a un usuario y genera un token JWT.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthDto'
+      responses:
+        200:
+          description: Login exitoso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  token:
+                    type: string
+        401:
+          description: Login fallido.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /login-fail:
+    get:
+      tags:
+        - Autenticación
+      summary: Error en el login
+      description: Devuelve un mensaje de error si el login falla.
+      responses:
+        401:
+          description: Login fallido.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /register:
+    post:
+      tags:
+        - Autenticación
+      summary: Registrar un nuevo usuario
+      description: Registra un nuevo usuario y envía un correo de confirmación.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+      responses:
+        201:
+          description: Registro exitoso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  user:
+                    $ref: '#/components/schemas/User'
+        401:
+          description: Registro fallido.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /register-fail:
+    get:
+      tags:
+        - Autenticación
+      summary: Error en el registro
+      description: Devuelve un mensaje de error si el registro falla.
+      responses:
+        401:
+          description: Registro fallido.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /current:
+    get:
+      tags:
+        - Autenticación
+      summary: Obtener usuario actual
+      description: Retorna la información del usuario autenticado basado en el token JWT.
+      responses:
+        200:
+          description: Usuario autenticado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        401:
+          description: No autenticado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /logout:
+    get:
+      tags:
+        - Autenticación
+      summary: Cerrar sesión
+      description: Limpia las cookies y cierra la sesión del usuario.
+      responses:
+        200:
+          description: Logout exitoso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+components:
+  schemas:
+    AuthDto:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Correo del usuario.
+        password:
+          type: string
+          description: Contraseña del usuario.
+      required:
+        - email
+        - password
+
+    UserDto:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: Nombre del usuario.
+        email:
+          type: string
+          description: Correo del usuario.
+        password:
+          type: string
+          description: Contraseña del usuario.
+      required:
+        - first_name
+        - email
+        - password
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID único del usuario.
+        first_name:
+          type: string
+          description: Nombre del usuario.
+        email:
+          type: string
+          description: Correo del usuario.
+        role:
+          type: string
+          description: Rol del usuario.
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Descripción del error.

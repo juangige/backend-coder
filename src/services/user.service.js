@@ -29,27 +29,25 @@ export const userService = {
 
     async findByEmailAndPassword(email, password) {
         try {
-            // Buscar al usuario por su email
             const user = await userModel.findOne({ email });
             if (!user) {
                 throw new Error("Usuario no encontrado");
             }
 
-            // Aquí deberías agregar la lógica para comparar las contraseñas, por ejemplo con bcrypt
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
                 throw new Error("Contraseña incorrecta");
             }
 
-            return user; // Si las credenciales son correctas, devuelve el usuario
+            return user; 
         } catch (error) {
-            throw new Error(error.message); // Propaga el error
+            throw new Error(error.message); 
         }
     },
 
     findByEmail: async (email) => {
         try {
-            return await userModel.findOne({ email }); // Usa userModel en lugar de User
+            return await userModel.findOne({ email }); 
         } catch (error) {
             throw new Error('Error al buscar el usuario');
         }

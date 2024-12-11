@@ -1,0 +1,265 @@
+openapi: 3.0.3
+info:
+  title: Carts API
+  version: 1.0.0
+  description: API para la gestión de carritos de compras
+
+paths:
+  /carts:
+    get:
+      tags:
+        - Carritos
+      summary: Obtener todos los carritos
+      operationId: getAllCarts
+      responses:
+        200:
+          description: Lista de carritos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cart'
+        500:
+          description: Error del servidor
+    post:
+      tags:
+        - Carritos
+      summary: Crear un carrito
+      operationId: createCart
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCartRequest'
+      responses:
+        201:
+          description: Carrito creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        500:
+          description: Error al crear el carrito
+
+  /carts/{id}:
+    get:
+      tags:
+        - Carritos
+      summary: Obtener un carrito por ID
+      operationId: getCartById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID del carrito
+      responses:
+        200:
+          description: Carrito obtenido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        404:
+          description: Carrito no encontrado
+        500:
+          description: Error del servidor
+    put:
+      tags:
+        - Carritos
+      summary: Actualizar un carrito
+      operationId: updateCart
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID del carrito
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCartRequest'
+      responses:
+        200:
+          description: Carrito actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        404:
+          description: Carrito no encontrado
+        500:
+          description: Error del servidor
+    delete:
+      tags:
+        - Carritos
+      summary: Eliminar un carrito por ID
+      operationId: deleteCartById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID del carrito
+      responses:
+        200:
+          description: Carrito eliminado
+        404:
+          description: Carrito no encontrado
+        500:
+          description: Error del servidor
+
+  /carts/{id}/products:
+    post:
+      tags:
+        - Carritos
+      summary: Agregar productos a un carrito
+      operationId: addProductsToCart
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID del carrito
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddProductsRequest'
+      responses:
+        200:
+          description: Productos agregados al carrito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        404:
+          description: Carrito o productos no encontrados
+        500:
+          description: Error del servidor
+
+  /carts/{id}/products/{productId}:
+    delete:
+      tags:
+        - Carritos
+      summary: Eliminar un producto de un carrito
+      operationId: deleteProductFromCart
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID del carrito
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID del producto
+      responses:
+        200:
+          description: Producto eliminado del carrito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        404:
+          description: Carrito o producto no encontrado
+        500:
+          description: Error del servidor
+
+  /carts/{id}/purchase:
+    post:
+      tags:
+        - Carritos
+      summary: Realizar la compra de un carrito
+      operationId: purchaseCart
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID del carrito
+      responses:
+        201:
+          description: Compra realizada exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  order:
+                    type: object
+        400:
+          description: Error en la compra (e.g., productos sin stock)
+        500:
+          description: Error del servidor
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        id:
+          type: string
+        user:
+          type: string
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+              quantity:
+                type: number
+    CreateCartRequest:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+              quantity:
+                type: number
+    UpdateCartRequest:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+              quantity:
+                type: number
+    AddProductsRequest:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+              quantity:
+                type: number
+

@@ -51,10 +51,10 @@ export class CartsController {
 
     async update(req, res) {
       try {
-        const { id } = req.params;  // Recupera el ID desde los parámetros de la URL
-        const { products } = req.body;  // Solo obtén los productos desde el cuerpo de la solicitud
+        const { id } = req.params;  
+        const { products } = req.body;  
      
-        // Verifica que se proporcionen productos
+        // Verificar que se proporcionen productos
         if (!products || products.length === 0) {
           return res.status(400).json({ message: "Se deben proporcionar productos." });
         }
@@ -62,13 +62,12 @@ export class CartsController {
         console.log("Actualizando carrito con ID:", id);
         console.log("Productos a actualizar:", products);
      
-        // Realiza la actualización en la base de datos
+        // DB
         const updatedCart = await CartService.update(id, { products });
         if (!updatedCart) {
           return res.status(404).json({ message: "Carrito no encontrado" });
         }
      
-        // Devuelve la respuesta con el carrito actualizado
         res.status(200).json({ message: "Carrito actualizado", cart: updatedCart });
       } catch (error) {
         console.error("Error al actualizar el carrito:", error);
@@ -78,8 +77,8 @@ export class CartsController {
 
     async deleteById(req, res) {
       try {
-        const { id } = req.params;  // Cambié cartId por id para que coincida con la ruta
-        console.log("Eliminando carrito con ID:", id);  // Verifica que el ID esté llegando correctamente
+        const { id } = req.params;  
+        console.log("Eliminando carrito con ID:", id);  
     
         const deletedCart = await CartService.delete(id);
         if (!deletedCart) {
@@ -107,16 +106,12 @@ export class CartsController {
           return res.status(404).json({ message: "Carrito no encontrado" });
         }
     
-        // Verificar si el producto está en el carrito
         const productIndex = cart.products.findIndex((product) => product.product.toString() === productId);
         if (productIndex === -1) {
           return res.status(404).json({ message: "El producto no se encuentra en el carrito" });
         }
-    
-        // Eliminar el producto del carrito
         cart.products.splice(productIndex, 1);
-    
-        // Guardar el carrito actualizado
+
         await cart.save();
     
         return res.json(cart);
@@ -127,7 +122,6 @@ export class CartsController {
 
     async addProduct(req, res) {
       try {
-        // Desestructurar la lista de productos del cuerpo de la solicitud
         const { products } = req.body;
     
         if (!Array.isArray(products) || products.length === 0) {
@@ -136,7 +130,7 @@ export class CartsController {
           });
         }
     
-        // Buscar el carrito
+     
         const cart = await cartModel.findById(req.params.id);
         if (!cart) {
           return res.status(404).json({
@@ -147,7 +141,6 @@ export class CartsController {
         for (const item of products) {
           const { product, quantity } = item;
     
-          // Verificar si el producto existe
           const productExists = await productModel.findById(product);
           if (!productExists) {
             return res.status(404).json({
@@ -155,23 +148,20 @@ export class CartsController {
             });
           }
     
-          // Buscar si el producto ya está en el carrito
+          
           const isProductInCart = cart.products.find((p) => {
             return p.product.equals(product);
           });
     
           if (isProductInCart) {
-            // Aumentar la cantidad del producto en el carrito
             isProductInCart.quantity += quantity;
           } else {
-            // Agregar el producto al carrito
             cart.products.push({
               product,
               quantity,
             });
           }
         }
-        // Guardar el carrito actualizado
         await cart.save();
     
         return res.json(cart);

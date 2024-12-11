@@ -2,7 +2,6 @@ import { userService } from "../services/user.service.js";
 import { userModel } from "../models/user.model.js";
 import errors from '../utils/errors/errors.js'
 import errorCustom from '../utils/errors/errorCustom.js'
-import winstonLogger from "../utils/winston.util.js";
 
 class UserController {
     async create(req, res) {
