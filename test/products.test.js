@@ -8,7 +8,6 @@ describe("Test de Productos", () => {
   let authToken;
   let pid;
 
-  // body del login con Rol de Admin
   const loginData = {
     email: "juan@gmail.com",
     password: "1234",
@@ -24,7 +23,6 @@ describe("Test de Productos", () => {
   };
 
   before(async () => {
-    // login para los test
     const loginResponse = await requester.post("/auth/login").send(loginData);
 
     if (loginResponse.statusCode === 200) {

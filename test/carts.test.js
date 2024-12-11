@@ -7,7 +7,6 @@ const requester = supertest(`http://localhost:${config.PORT}/api`);
 describe("Test Carrito", () => {
   let authToken;
   let cartId;
-  let productId;
 
   const loginData = {
     email: "juan@gmail.com",
@@ -19,7 +18,6 @@ describe("Test Carrito", () => {
     if (loginResponse.statusCode === 200) {
       const cookies = loginResponse.headers["set-cookie"];
       const tokenCookie = cookies.find((cookie) => cookie.startsWith("coderToken"));
-      // Extraer solo el valor del token
       authToken = tokenCookie.split(';')[0].split('=')[1];
     }
   });
@@ -31,7 +29,7 @@ describe("Test Carrito", () => {
       .send({
         products: [
           {
-            product: "672b99b5c182abc9bf6636bc",  // Cambio aquí también
+            product: "672b99b5c182abc9bf6636bc",
             quantity: 3,
           },
         ],
@@ -82,7 +80,7 @@ describe("Test Carrito", () => {
       });
   
     expect(response.statusCode).to.equal(200);
-    expect(response.body.products).to.have.lengthOf.above(0); // Verifica que el carrito tenga productos
+    expect(response.body.products).to.have.lengthOf.above(0); 
   });
 
   it("Eliminar carrito", async () => {

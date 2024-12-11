@@ -1,0 +1,78 @@
+openapi: 3.0.0
+info:
+  title: Products API
+  description: API básica para probar Swagger
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8000/api/products
+    description: Servidor local
+
+paths:
+  /:
+    get:
+      summary: Obtener todos los productos
+      description: Devuelve una lista de productos.
+      responses:
+        200:
+          description: Lista de productos obtenida exitosamente.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: ID único del producto.
+                    name:
+                      type: string
+                      description: Nombre del producto.
+
+    post:
+      summary: Crear un producto
+      description: Crea un nuevo producto.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nombre del producto.
+                price:
+                  type: number
+                  description: Precio del producto.
+      responses:
+        201:
+          description: Producto creado exitosamente.
+
+  /{productId}:
+    get:
+      summary: Obtener un producto por ID
+      description: Devuelve un producto por su ID.
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Producto obtenido exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  price:
+                    type: number
+        404:
+          description: Producto no encontrado.

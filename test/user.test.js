@@ -71,12 +71,12 @@ describe("Test usuarios", () => {
   });
 
   it("Editar Usuario", async () => {
-    const userEditId = "672b942cf9269af1d79237fd"; // Definir el id aquí
+    const userEditId = "672b942cf9269af1d79237fd";
     const response = await requester
       .put(`/user/${userEditId}`)
       .set("Cookie", authToken)
       .send({
-        last_name: "TestNewLastName", // Solo cambiamos el last_name
+        last_name: "TestNewLastName", 
       });
 
     expect(response.statusCode).to.equal(200);
