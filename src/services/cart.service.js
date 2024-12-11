@@ -1,5 +1,4 @@
 import { cartModel } from "../models/cart.model.js";
-import { userService } from "./user.service.js";
 
 export const CartService = {
     async getAll() {
@@ -14,20 +13,22 @@ export const CartService = {
         return await cartModel.create(cart);
       },
 
-    async update(id, cart) {
-        return await cartModel.findByIdAndUpdate(id, cart);
-    },
+      async update(id, cart) {
+        const updatedCart = await cartModel.findByIdAndUpdate(id, { products: cart.products }, { new: true });
+        return updatedCart;
+      },
 
     async delete(id) {
-        return await cartModel.findByIdAndDelete(id);
-    },
+        const deletedCart = await cartModel.findByIdAndDelete(id);
+        return deletedCart;
+      },
 
     async addProduct(cartId, productId) {
         const cart = await cartModel.findById(cartId);
         cart.products.push(productId);
         return await cartModel.findByIdAndUpdate(cartId, cart);
     },
-
+    
     async purchase(cartId) {
         const cart = await cartModel.findById(cartId);
         cart.products = [];

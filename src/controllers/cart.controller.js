@@ -49,15 +49,49 @@ export class CartsController {
       }
     }
 
-    async deleteById(req, res) {
-        try {
-            const { cartId } = req.params;
-            const deletedCart = await CartService.delete(cartId);
-            res.json(deletedCart);
-        } catch (error) {
-            res.status(500).json({ message: error.message });
+    async update(req, res) {
+      try {
+        const { id } = req.params;  // Recupera el ID desde los parámetros de la URL
+        const { products } = req.body;  // Solo obtén los productos desde el cuerpo de la solicitud
+     
+        // Verifica que se proporcionen productos
+        if (!products || products.length === 0) {
+          return res.status(400).json({ message: "Se deben proporcionar productos." });
         }
+    
+        console.log("Actualizando carrito con ID:", id);
+        console.log("Productos a actualizar:", products);
+     
+        // Realiza la actualización en la base de datos
+        const updatedCart = await CartService.update(id, { products });
+        if (!updatedCart) {
+          return res.status(404).json({ message: "Carrito no encontrado" });
+        }
+     
+        // Devuelve la respuesta con el carrito actualizado
+        res.status(200).json({ message: "Carrito actualizado", cart: updatedCart });
+      } catch (error) {
+        console.error("Error al actualizar el carrito:", error);
+        res.status(500).json({ message: error.message });
+      }
     }
+
+    async deleteById(req, res) {
+      try {
+        const { id } = req.params;  // Cambié cartId por id para que coincida con la ruta
+        console.log("Eliminando carrito con ID:", id);  // Verifica que el ID esté llegando correctamente
+    
+        const deletedCart = await CartService.delete(id);
+        if (!deletedCart) {
+          return res.status(404).json({ message: "Carrito no encontrado" });
+        }
+        res.status(200).json({ message: "Carrito eliminado", cart: deletedCart });
+      } catch (error) {
+        console.error("Error al eliminar el carrito:", error);
+        res.status(500).json({ message: error.message });
+      }
+    }
+    
 
     async deleteProduct(req, res) {
       try {

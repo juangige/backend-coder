@@ -1,5 +1,5 @@
 import { Router } from "express";
-import authController from "../controllers/auth.controller.js";
+import AuthController from "../controllers/auth.controller.js";
 import { validate } from "../middlewares/validation.middleware.js";
 import { authDto } from "../dto/auth.dto.js";
 import { userDto } from "../dto/user.dto.js";
@@ -11,16 +11,16 @@ router.post(
   "/login",
   validate(authDto),
   authenticate("login"),
-  authController.login
+  AuthController.login
 );
-router.get("/login-fail", authController.loginFail);
+router.get("/login-fail", AuthController.loginFail);
 
 //
 router.post(
   "/register",
   validate(userDto),
   authenticate("register"),
-  authController.register
+  AuthController.register
 );
 router.get("/register-fail", (req, res) => {
   res.json({ message: "Hubo un error en el Registro" });
@@ -30,10 +30,10 @@ router.get("/register-fail", (req, res) => {
 router.get(
   "/current",
   authenticate("jwt", { session: false }),
-  authController.current
+  AuthController.current
 );
 
-router.get("/logout", authController.logout);
+router.get("/logout", AuthController.logout);
 
 
 

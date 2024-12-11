@@ -1,6 +1,5 @@
 .gitignore
 /node_modules
-/test
 .env
 .env.dev
 .env.prod

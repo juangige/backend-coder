@@ -1,4 +1,4 @@
-import errors from '../utils/errors/errros.js'
+import errors from '../utils/errors/errors.js'
 import winstonLogger from '../utils/winston.util.js'
 
 function errorHandler(error, req, res, next) {

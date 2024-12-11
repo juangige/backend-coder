@@ -11,6 +11,10 @@ import routes from "./Routes/index.routes.js";
 import cors from "cors";
 import args from "./utils/args.utils.js"
 import winston from "./middlewares/winstonLogger.midleware.js";
+import swaggerJSDoc from "swagger-jsdoc";
+import opts from "./utils/swaggerOpts.utils.js";
+import { serve, setup } from "swagger-ui-express";
+import errorHandler from "./middlewares/errorHandler.middleware.js";
 
  
 const app = express();
@@ -61,6 +65,11 @@ app.set("views", `${__dirname}/views`);
 
 // Routes
 app.use("/api", routes);
+app.use(errorHandler)
+
+// Documentacion
+const specs = swaggerJSDoc(opts)
+app.use("/api/docs", serve, setup(specs))
 
 app.listen(port, () => {
     console.log(`Server running on port http://localhost:${port} on `+mode);

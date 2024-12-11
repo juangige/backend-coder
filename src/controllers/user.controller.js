@@ -13,8 +13,9 @@ class UserController {
         }
 
         try {
+            
             const user = await userService.create({ first_name, last_name, email, password, age });
-            return res.status(201).json(user);
+            return res.status(201).json({user});
         } catch (error) {
             console.error("Error en create:", error);
 
@@ -27,7 +28,6 @@ class UserController {
         try{
              
             const users = await userService.getAll();
-            winstonLogger.info(users)
             if(users.length > 0){
                 return res.status(200).json({message: "Usuarios:", users})
             } else {
@@ -39,16 +39,17 @@ class UserController {
         }
     }
 
-    async findById(userId, next) {
+    async findById(req, res, next) {
+        const userId = req.params.id; 
         try {
-            console.log("userId recibido:", userId);  // Verifica qué valor tiene userId
+            console.log("userId recibido:", userId); 
             const user = await userModel.findById(userId);
             if (!user) {
-                errorCustom.newError(errors.notFound)
+                return next(new Error(errors.notFound)); 
             }
-            return user;
+            return res.status(200).json(user); 
         } catch (error) {
-            return next(error)
+            return next(error);
         }
     }
 
@@ -67,27 +68,32 @@ class UserController {
     }
 
     async update(req, res) {
-        const { id } = req.params;
-        const { first_name, last_name, email, password, age } = req.body;
-        try{
-            const user = await userService.update(id, { first_name, last_name, email, password, age });
+        const { id } = req.params; 
+        const updateData = req.body; 
+    
+        try {
+            const user = await userService.update(id, updateData);
+            if (!user) {
+                return res.status(404).json({ message: "Usuario no encontrado" });
+            }
+    
             return res.status(200).json(user);
-        } catch(error) {
+        } catch (error) {
             return res.status(500).json({ message: error.message });
         }
     }
 
     async deleteById(req, res, next) {
         const { id } = req.params;
-        try{
+        try {
             const user = await userService.deleteById(id);
-            if(!user) {
-                errorCustom.newError(errors.notFound)
-            } else{
+            if (!user) {
+                errorCustom.newError(errors.notFound);
+            } else {
                 return res.status(200).json(user);
             }
-        } catch(error) {
-            return next(error)
+        } catch (error) {
+            return next(error);
         }
     }
 }

@@ -21,7 +21,16 @@ export const ProductService = {
     return await productModel.findByIdAndDelete(id);
   },
 
+  async deleteById(id) {
+    return await productModel.findByIdAndDelete(id);
+  },
   async discountStock(id, quantity) {
-    return await productModel.findByIdAndUpdate(id, { $inc: { stock: -quantity } });
-  }
-}
+    return await productModel.findByIdAndUpdate(id, {
+      $inc: { stock: -quantity },
+    });
+  },
+  async update(id, updateData) {
+    // Actualiza solo los campos que vienen en el objeto updateData
+    return await productModel.findByIdAndUpdate(id, updateData, { new: true });
+  },
+};
