@@ -5,11 +5,11 @@ info:
   version: 1.0.0
 
 servers:
-  - url: http://localhost:3000/api/auth
+  - url: http://localhost:8000/api/auth
     description: Servidor local
 
 paths:
-  /login:
+  /api/auth/login:
     post:
       tags:
         - Autenticación
@@ -40,7 +40,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /login-fail:
+  /api/auth/login-fail:
     get:
       tags:
         - Autenticación
@@ -54,7 +54,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /register:
+  /api/auth/register:
     post:
       tags:
         - Autenticación
@@ -85,7 +85,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /register-fail:
+  /api/auth/register-fail:
     get:
       tags:
         - Autenticación
@@ -99,7 +99,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /current:
+  /api/auth/current:
     get:
       tags:
         - Autenticación
@@ -119,7 +119,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /logout:
+  /api/auth/logout:
     get:
       tags:
         - Autenticación

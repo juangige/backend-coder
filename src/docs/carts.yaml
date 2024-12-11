@@ -5,7 +5,7 @@ info:
   description: API para la gestión de carritos de compras
 
 paths:
-  /carts:
+  /api/carts:
     get:
       tags:
         - Carritos
@@ -43,7 +43,7 @@ paths:
         500:
           description: Error al crear el carrito
 
-  /carts/{id}:
+  /api/carts/{id}:
     get:
       tags:
         - Carritos
@@ -116,7 +116,7 @@ paths:
         500:
           description: Error del servidor
 
-  /carts/{id}/products:
+  /api/carts/{id}/products:
     post:
       tags:
         - Carritos
@@ -147,7 +147,7 @@ paths:
         500:
           description: Error del servidor
 
-  /carts/{id}/products/{productId}:
+  /api/carts/{id}/products/{productId}:
     delete:
       tags:
         - Carritos
@@ -178,7 +178,7 @@ paths:
         500:
           description: Error del servidor
 
-  /carts/{id}/purchase:
+  /api/carts/{id}/purchase:
     post:
       tags:
         - Carritos
