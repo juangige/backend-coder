@@ -3,7 +3,7 @@ import args from './args.utils.js'
 
 const { mode } = args
 
-const path = "./.env."+mode
+const path = `./.env.${mode}`;
 
 config({ path })
 

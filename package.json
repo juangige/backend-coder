@@ -7,8 +7,7 @@
   "scripts": {
     "start": "node src/server.js",
     "test": "mocha ./test",
-    "dev": "nodemon server.js -p 8000 --mode=dev",
-    "prod": "nodemon server.js -p 10000 --mode=prod",
+    "dev": "nodemon server.js -p 10000 --mode=dev",
     "tdd": "node ./test/tdd/suma.tdd.js",
     "image": "docker build -t backend-coderhouse .",
     "rename": "docker tag backend-coderhouse juangige1/backend-coderhouse:1.0.0",

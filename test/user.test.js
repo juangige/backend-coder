@@ -31,7 +31,7 @@ describe("Test usuarios", () => {
   });
 
   it("Obtener un usuario", async () => {
-    const userId = "672b9021d676d3e0fc3f909d";
+    const userId = "672b9c6ecc94d8377d2efb62";
 
     const response = await requester
       .get(`/user/${userId}`)
@@ -42,7 +42,7 @@ describe("Test usuarios", () => {
   });
 
   it("Obtener usuario por Email", async () => {
-    const userEmail = "brianaconroy@test.com";
+    const userEmail = "emeraldjohnson@test.com";
 
     const response = await requester
       .get(`/user/email/${userEmail}`)
@@ -71,9 +71,8 @@ describe("Test usuarios", () => {
   });
 
   it("Editar Usuario", async () => {
-    const userEditId = "672b942cf9269af1d79237fd";
     const response = await requester
-      .put(`/user/${userEditId}`)
+      .put(`/user/${userId}`)
       .set("Cookie", authToken)
       .send({
         last_name: "TestNewLastName", 
