@@ -3,3 +3,5 @@
 [31mfatal[39m: DELETE /api/user/675929f70913a57c0cc8d2c4 - PARAMETER "FILTER" TO DELETEONE() MUST BE AN OBJECT, GOT "675929F70913A57C0CC8D2C4" (TYPE STRING)
 [31mfatal[39m: GET /api/user/672b9c6ecc94d8377d2efb62 - [OBJECT OBJECT]
 [33merror[39m: GET /api/user/email/emeraldjohnson@test.com - CLIENT ERROR
+[31mfatal[39m: GET /api/user/672b9c6ecc94d8377d2efb62 - [OBJECT OBJECT]
+[33merror[39m: GET /api/user/email/emeraldjohnson@test.com - CLIENT ERROR
