@@ -1,6 +1,9 @@
 # Backend Coderhouse
 Repositorio de un servidor con Express
 
+## Documentacion:
+- /api/docs
+
 ## Instrucciones de Uso
 -  Clona este repositorio.
 -  Instala las dependencias con npm install
