@@ -1,5 +1,5 @@
 import { userModel } from "../models/user.model.js";
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
 
 export const userService = {
 
@@ -34,7 +34,7 @@ export const userService = {
                 throw new Error("Usuario no encontrado");
             }
 
-            const isMatch = await bcrypt.compare(password, user.password);
+            const isMatch = await bcryptjs.compare(password, user.password);
             if (!isMatch) {
                 throw new Error("Contraseña incorrecta");
             }

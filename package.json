@@ -8,14 +8,18 @@
     "start": "node src/server.js",
     "test": "mocha ./test",
     "dev": "nodemon server.js -p 8000 --mode=dev",
-    "tdd": "node ./test/tdd/suma.tdd.js"
+    "prod": "nodemon server.js -p 10000 --mode=prod",
+    "tdd": "node ./test/tdd/suma.tdd.js",
+    "image": "docker build -t backend-coderhouse .",
+    "rename": "docker tag backend-coderhouse juangige1/backend-coderhouse:1.0.0",
+    "push": "docker push juangige1/backend-coderhouse:1.0.0"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@handlebars/allow-prototype-access": "^1.0.5",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "chai": "^5.1.2",
     "commander": "^12.1.0",
     "cookie-parser": "^1.4.6",
