@@ -7,7 +7,7 @@ Repositorio de un servidor con Express
 -  Ejecuta el proyecto con npm run dev
 
 ## PORT 
-- 5000
+- 10000
 
 ## Endpoints:
 
